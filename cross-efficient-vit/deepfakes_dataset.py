@@ -12,11 +12,13 @@ from transforms.albu import IsotropicResize
 
 class DeepFakesDataset(Dataset):
     def __init__(self, images, labels, image_size, mode = 'train'):
-        self.x = images
+        self.x = images # (tuple (frame, label))
         self.y = torch.from_numpy(labels)
         self.image_size = image_size
         self.mode = mode
-        self.n_samples = images.shape[0]
+        self.n_samples = len(images)
+
+        # images.shape[0]
     
     def create_train_transforms(self, size):
         return Compose([
@@ -43,7 +45,8 @@ class DeepFakesDataset(Dataset):
         ])
 
     def __getitem__(self, index):
-        image = np.asarray(self.x[index])
+        image = cv2.imread(self.x[index][0])
+        # image = np.asarray(self.x[index][0])
         
         if self.mode == 'train':
             transform = self.create_train_transforms(self.image_size)

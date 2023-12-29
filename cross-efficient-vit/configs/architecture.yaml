@@ -1,7 +1,7 @@
 training:
   lr: 0.01
   weight-decay: 0.0000001
-  bs: 16
+  bs: 128
   scheduler: 'steplr'
   gamma: 0.1
   step-size: 15
